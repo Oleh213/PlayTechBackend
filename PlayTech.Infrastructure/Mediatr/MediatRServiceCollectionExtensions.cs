@@ -1,6 +1,16 @@
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace PlayTech.Infrastructure.Mediatr;
 
-public class MediatRServiceCollectionExtensions
+
+public static class MediatRServiceCollectionExtensions
 {
-    
+    public static void AddMediatRInfrastructure(this IServiceCollection services, params Assembly[] assemblies)
+    {
+        foreach (var assembly in assemblies)
+        {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+        }
+    }
 }

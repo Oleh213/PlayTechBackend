@@ -1,13 +1,25 @@
+using AutoMapper;
 using MediatR;
-using PlayTechBackend.Business.Commands.Employee;
+using PlayTech.Abstractions.Models;
+using PlayTech.Business.Commands.Employee;
+using PlayTech.Repositories.Employee;
 
-namespace PlayTechBackend.Business.Handlers.Employee;
+namespace PlayTech.Business.Handlers.Employee;
 
-public class GetAllEmployeesCommandHandler: IRequestHandler<GetAllEmployeesCommand, IEnumerable<Abstractions.Entities.Employee>>
+public class GetAllEmployeesCommandHandler: IRequestHandler<GetAllEmployeesCommand, IEnumerable<EmployeeModel>>
 {
-    
-    public async Task<IEnumerable<Abstractions.Entities.Employee>> Handle(GetAllEmployeesCommand request, CancellationToken cancellationToken)
+    private IEmployeeRepository _employeeRepository { get; set; }
+    private IMapper _mapper { get; set; }
+
+    public GetAllEmployeesCommandHandler(
+        IMapper mapper, IEmployeeRepository employeeRepository)
     {
-        return await Task.FromResult(new List<Abstractions.Entities.Employee>());
+        _mapper = mapper;
+        _employeeRepository = employeeRepository;
+    }
+    
+    public async Task<IEnumerable<EmployeeModel>> Handle(GetAllEmployeesCommand request, CancellationToken cancellationToken)
+    {
+        return _mapper.Map<IEnumerable<EmployeeModel>>(await _employeeRepository.GetAllEmployeesAsync());
     }
 }

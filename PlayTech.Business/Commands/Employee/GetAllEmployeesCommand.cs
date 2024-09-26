@@ -1,8 +1,9 @@
 using MediatR;
+using PlayTech.Abstractions.Models;
 
-namespace PlayTechBackend.Business.Commands.Employee;
+namespace PlayTech.Business.Commands.Employee;
 
-public class GetAllEmployeesCommand : IRequest<IEnumerable<Abstractions.Entities.Employee>>
+public class GetAllEmployeesCommand : IRequest<IEnumerable<EmployeeModel>>
 {
     
 }

@@ -1,6 +1,25 @@
+using AutoMapper;
+using MediatR;
+using PlayTech.Abstractions.Models;
+using PlayTech.Business.Commands.Employee;
+using PlayTech.Repositories.Employee;
+
 namespace PlayTech.Business.Handlers.Employee;
 
-public class GetEmployeesWithHighestSalaryInDepartmentsCommandHandler
+public class GetEmployeesWithHighestSalaryInDepartmentsCommandHandler : IRequestHandler<GetEmployeesWithHighestSalaryInDepartmentsCommand, IEnumerable<EmployeeModel>>
 {
+    private IEmployeeRepository _employeeRepository { get; set; }
+    private IMapper _mapper { get; set; }
+
+    public GetEmployeesWithHighestSalaryInDepartmentsCommandHandler(
+        IMapper mapper, IEmployeeRepository employeeRepository)
+    {
+        _mapper = mapper;
+        _employeeRepository = employeeRepository;
+    }
     
+    public async Task<IEnumerable<EmployeeModel>> Handle(GetEmployeesWithHighestSalaryInDepartmentsCommand request, CancellationToken cancellationToken)
+    {
+        return _mapper.Map<IEnumerable<EmployeeModel>>(await _employeeRepository.GetEmployeesWithHighestSalaryInDepartmentsAsync());
+    }
 }

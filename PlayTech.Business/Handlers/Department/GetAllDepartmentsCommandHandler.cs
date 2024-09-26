@@ -8,8 +8,8 @@ namespace PlayTech.Business.Handlers.Department;
 
 public class GetAllDepartmentsCommandHandler: IRequestHandler<GetAllDepartmentsCommand, IEnumerable<DepartmentModel>>
 {
-    public IDepartmentRepository _departmentRepository { get; set; }
-    public IMapper _mapper { get; set; }
+    private IDepartmentRepository _departmentRepository { get; set; }
+    private IMapper _mapper { get; set; }
 
     public GetAllDepartmentsCommandHandler(
         IDepartmentRepository departmentRepository, 

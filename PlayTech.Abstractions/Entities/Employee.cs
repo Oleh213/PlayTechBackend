@@ -1,4 +1,4 @@
-namespace PlayTechBackend.Abstractions.Entities;
+namespace PlayTech.Abstractions.Entities;
 
 public class Employee
 {
@@ -7,4 +7,6 @@ public class Employee
     public decimal Salary { get; set; }
     public int ManagerId { get; set; }
     public int DepartmentId { get; set; }
+    public Department Department { get; set; }
+    public Manager Manager { get; set; }
 }

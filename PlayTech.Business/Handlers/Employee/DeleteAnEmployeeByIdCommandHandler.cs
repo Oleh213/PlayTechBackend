@@ -19,6 +19,13 @@ public class DeleteAnEmployeeByIdCommandHandler: IRequestHandler<DeleteAnEmploye
     
     public async Task Handle(DeleteAnEmployeeByIdCommand request, CancellationToken cancellationToken)
     {
+        var employees = await _employeeRepository.GetAllEmployeesAsync();
+        
+        if (employees.Any(e => e.ManagerId == request.Id))
+        {
+            throw new InvalidOperationException($"Cannot delete employee with Id {request.Id} because they are a manager.");
+        }
+        
         await _employeeRepository.DeleteAnEmployeeAsync(request.Id);
     }
 }
